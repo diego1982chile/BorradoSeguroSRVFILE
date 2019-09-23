@@ -1,0 +1,9 @@
+C:\Users\des02w7\source\repos\BorradoSeguroSRVFILE\bin\Debug\BorradoSeguroSRVFILE.exe
+C:\Users\des02w7\source\repos\BorradoSeguroSRVFILE\bin\Debug\BorradoSeguroSRVFILE.pdb
+C:\Users\des02w7\source\repos\BorradoSeguroSRVFILE\obj\Debug\BorradoSeguroSRVFILE.csprojAssemblyReference.cache
+C:\Users\des02w7\source\repos\BorradoSeguroSRVFILE\obj\Debug\BorradoSeguroSRVFILE.csproj.CoreCompileInputs.cache
+C:\Users\des02w7\source\repos\BorradoSeguroSRVFILE\obj\Debug\BorradoSeguroSRVFILE.exe
+C:\Users\des02w7\source\repos\BorradoSeguroSRVFILE\obj\Debug\BorradoSeguroSRVFILE.pdb
+C:\Users\des02w7\source\repos\BorradoSeguroSRVFILE\bin\Debug\Castle.Core.dll
+C:\Users\des02w7\source\repos\BorradoSeguroSRVFILE\bin\Debug\Castle.Core.xml
+C:\Users\des02w7\source\repos\BorradoSeguroSRVFILE\obj\Debug\BorradoSeguroSRVFILE.csproj.CopyComplete

@@ -1,0 +1,2 @@
+ERASER_HOME=C:\Program Files\Eraser\
+PATHS=C:\TEST 3\

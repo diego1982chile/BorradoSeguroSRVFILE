@@ -1,0 +1,10 @@
+23-09-2019 0:00:00
+23-09-2019 0:00:00
+23-09-2019 0:00:00
+C:\TEST 3\adf-essentials.zip	OK
+C:\TEST 3\SecuExtender_SecuExtender_Windows 4.0.3.0.zip	OK
+C:\TEST 3\TEST 5\SimpleMindPro1202b5302TrialSetup.exe	OK
+C:\TEST 3\TEST 5\WinSCP-5.15-Setup.exe	OK
+C:\TEST 3\TEST 5\TEST 7\Eraser 6.2.0.2982 (1).exe	OK
+El directorio no está vacío.
+
