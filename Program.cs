@@ -14,6 +14,7 @@ namespace cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE
     class Program
     {
         static readonly String ERASER_ARGUMENTS = "erase /method=b1bfab4a-31d3-43a5-914c-e9892c78afd8 /target file=";
+        static readonly String ERASER_ARGUMENTS_2 = "erase /method=b1bfab4a-31d3-43a5-914c-e9892c78afd8 /target dir=?,deleteIfEmpty=false";
         static readonly String DELIMITER = "\t";
         static readonly DateTime TODAY = DateTime.Today;
         static readonly String LOG_FILE = @"log.txt";
@@ -46,12 +47,16 @@ namespace cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE
                         throw new System.ApplicationException(msg);
                     }
 
+                    /*
                     Erase(path);
                     
                     foreach (String directory in Directory.GetDirectories(path))
                     {
                         Directory.Delete(directory, true);
-                    }                    
+                    }
+                    */
+
+                    CallEraserOnFolder(path);
 
                 }
             }
@@ -108,7 +113,14 @@ namespace cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE
                                 string[] tokens2 = tokens[1].Split(',');
                                 foreach (String path in tokens2)
                                 {
-                                    PATHS.Add(path);
+                                    if(path.EndsWith("\\"))
+                                    {                                        
+                                        PATHS.Add(path.TrimEnd('\\'));
+                                    }
+                                    else
+                                    {
+                                        PATHS.Add(path);
+                                    }                                    
                                 }
                                 break;
                             default:
@@ -166,7 +178,49 @@ namespace cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE
                 {
                     process.Kill();
                 }
-                string output = "Contenido del directorio " + path + " borrado exitosamente."; //The output result                
+                string output = "Archivo " + path + " borrado exitosamente."; //The output result                
+                Log(output, EventLogEntryType.Information);
+                Log(path + DELIMITER + "OK");
+            }
+            catch (Exception e)
+            {
+                Log(e.Message, EventLogEntryType.Information);
+                Log(path + DELIMITER + "FALLÓ");
+                //throw new System.ApplicationException(e.Message);
+            }
+
+        }
+
+        static void CallEraserOnFolder(String path)
+        {
+            try
+            {
+                Process process = new System.Diagnostics.Process();
+                process.StartInfo.FileName = ERASER_PATH;                
+                process.StartInfo.Arguments =ERASER_ARGUMENTS_2.Replace("?", "\"" + path + "\""); //argument                
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
+                process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                process.StartInfo.CreateNoWindow = true; //not diplay a windows
+                process.StartInfo.Verb = "runas";
+                process.Start();
+                //process.StandardOutput.ReadToEnd();
+                //process.WaitForExit();
+                
+                while (Directory.EnumerateDirectories(path).Count() + Directory.EnumerateFiles(path).Count() > 0)
+                {
+                    Thread.Sleep(2000);
+                }
+
+                if (!process.HasExited)
+                {
+                    process.Kill();
+                    //string stdoutx = process.StandardOutput.ReadToEnd();
+                    //string stderrx = process.StandardError.ReadToEnd();
+                }
+
+                string output = "Contenido de directorio " + path + " borrado exitosamente."; //The output result                
                 Log(output, EventLogEntryType.Information);
                 Log(path + DELIMITER + "OK");
             }
