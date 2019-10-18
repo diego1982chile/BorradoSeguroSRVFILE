@@ -18,3 +18,13 @@ El directorio no está vacío.
 25-09-2019 0:00:00
 25-09-2019 0:00:00
 C:\TEST 3	OK
+27-09-2019 0:00:00
+C:\AreaTC-Presentaciones\2019\apps\DigiTCgeneraInterfaz\archivos\log	FALLÓ
+11-10-2019 0:00:00
+11-10-2019 0:00:00
+14-10-2019 0:00:00
+14-10-2019 0:00:00
+14-10-2019 0:00:00
+14-10-2019 0:00:00
+14-10-2019 0:00:00
+\\file-gateway\cdeinfile	FALLÓ

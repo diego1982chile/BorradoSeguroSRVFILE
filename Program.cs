@@ -19,7 +19,9 @@ namespace cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE
         static readonly DateTime TODAY = DateTime.Today;
         static readonly String LOG_FILE = @"log.txt";
         static List<String> PATHS = new List<string>();
+        static List<String> PATHS2 = new List<string>();
         static String ERASER_PATH = @"C:\Program Files\Eraser\Eraser.exe";
+        static string PARAMETERS_FILE;
 
         static void Main(string[] args)
         {
@@ -27,6 +29,14 @@ namespace cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE
             try
             {
                 Log(TODAY.ToString());
+
+                if (args.Length == 0)
+                {
+                    System.Console.WriteLine("Ingrese la ruta del archivo de parámetros");
+                }
+
+                PARAMETERS_FILE = args[0];
+
                 readParameters();
 
                 if (!EraserExists())
@@ -47,18 +57,9 @@ namespace cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE
                         throw new System.ApplicationException(msg);
                     }
 
-                    /*
-                    Erase(path);
-                    
-                    foreach (String directory in Directory.GetDirectories(path))
-                    {
-                        Directory.Delete(directory, true);
-                    }
-                    */
-
-                    CallEraserOnFolder(path);
-
+                    CallEraserOnFolder(path);                    
                 }
+
             }
             catch (Exception e)
             {
@@ -87,7 +88,7 @@ namespace cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE
         {
             try
             {
-                FileStream fileStream = new FileStream("parameters.txt", FileMode.Open);
+                FileStream fileStream = new FileStream(PARAMETERS_FILE, FileMode.Open);
 
                 using (StreamReader reader = new StreamReader(fileStream))
                 {
@@ -110,17 +111,26 @@ namespace cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE
                                 ERASER_PATH = tokens[1] + "Eraser.exe";
                                 break;
                             case "PATHS":
-                                string[] tokens2 = tokens[1].Split(',');
+                                string[] tokens2 = tokens[1].Split(';');
                                 foreach (String path in tokens2)
                                 {
-                                    if(path.EndsWith("\\"))
+                                    string thePath = "";
+
+                                    if(String.IsNullOrEmpty(path.Trim()))
+                                    {
+                                        continue;
+                                    }
+                                    
+                                    if (path.EndsWith("\\"))
                                     {                                        
-                                        PATHS.Add(path.TrimEnd('\\'));
+                                        thePath = path.TrimEnd('\\');
                                     }
                                     else
                                     {
-                                        PATHS.Add(path);
-                                    }                                    
+                                        thePath = path;
+                                    }                                                                         
+
+                                    PATHS.Add(thePath);
                                 }
                                 break;
                             default:
@@ -134,11 +144,10 @@ namespace cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE
                 }
             }
             catch (FileNotFoundException e)
-            {
-                String msg = "El archivo de parámetros 'parameters.txt' no existe. Debe crear este archivo en la ruta donde se encuentra el ejecutable del aplicativo.";
-                Log(msg, EventLogEntryType.Error);
-                Log(msg);
-                throw new System.ApplicationException(msg);
+            {                
+                Log(e.Message, EventLogEntryType.Error);
+                Log(e.Message);
+                throw new System.ApplicationException(e.Message);
             }
             catch (FormatException e2)
             {
@@ -237,7 +246,7 @@ namespace cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE
         {
             using (EventLog eventLog = new EventLog("Application"))
             {
-                eventLog.Source = "cl.trends.pci.SRVFILE.BorradoSeguroSRVFILE";
+                eventLog.Source = "Trends";
                 eventLog.WriteEntry(message, level, 9998, 19 /*Archive Task*/);
             }
         }

@@ -1,2 +1,2 @@
 ERASER_HOME=C:\Program Files\Eraser\
-PATHS=C:\TEST 3\
+PATHS=C:\Users\des02w7\Downloads\log-TFC (2);\\file-gateway\cdeinfile\BSPLINK\
